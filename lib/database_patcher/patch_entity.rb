@@ -46,10 +46,12 @@ class DatabasePatcher::PatchEntity
 
   def register_this_patch(connection)
     connection[:installed_patches].insert(patch_record)
+    $stdout.puts("Patch applied: #{uniq_indentifier[:timestamp]}")
   end
 
   def unregister_this_patch(connection)
     connection[:installed_patches].where(uniq_indentifier).delete
+    $stdout.puts("Patch removed: #{uniq_indentifier[:timestamp]}")
   end
 
   def uniq_indentifier

@@ -8,6 +8,7 @@ describe DatabasePatcher::PatchApplier do
     connection[:installed_patches].truncate
     connection.run('DROP TABLE IF EXISTS test')
     connection.run('DROP TABLE IF EXISTS sample')
+    allow($stdout).to receive(:puts)
   end
 
   describe '#up' do
