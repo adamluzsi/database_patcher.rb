@@ -24,10 +24,12 @@ Or install it yourself as:
     $ gem install database_patcher
 
 ## Usage
-```
-Usage: database_patcher [options] <COMMAND_NAME>
 
+```
 The following commands supported:
+
+	Command: help
+	Description: show command specific help message
 
 	Command: create_patch
 	aliases: add, new
@@ -35,7 +37,7 @@ The following commands supported:
 
 	Command: initialize
 	aliases: init, setup
-	Description: this wil create initial directory and the default installed_patches table in the database
+	Description: this will create initial directory and the default installed_patches table in the database
 
 	Command: apply_pending_patches
 	aliases: apply, up
@@ -49,12 +51,11 @@ The following commands supported:
 	aliases: revert, step_back
 	Description: execute the last patch down part, and remove the db patch registration
 
-  Command: help
-  Description: show you help message about the command it self 
 ```
 
 ### Example use
 
-  $ database_patcher new  create some test table
+  $ database_patcher create_patch create some test table
   #> return the patch path
   # use <your favorite editor> to edit the file/files
+  $ database_patcher apply_pending_patches

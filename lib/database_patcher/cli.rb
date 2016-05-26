@@ -37,7 +37,10 @@ module DatabasePatcher::CLI
 
       commands.each do |subclass|
         opts.banner.concat("\tCommand: #{subclass.names.first}\n")
-        opts.banner.concat("\taliases: #{subclass.names[1..-1].join(', ')}\n")
+        aliases = [subclass.names[1..-1]].flatten
+        unless aliases.empty?
+          opts.banner.concat("\taliases: #{aliases.join(', ')}\n")
+        end 
         opts.banner.concat("\tDescription: #{subclass.desc}\n")
         opts.banner.concat("\n")
       end
