@@ -35,7 +35,7 @@ class DatabasePatcher::Fetcher
   attr_reader :connection
 
   def get_patches
-    Dir.glob(File.join(DatabasePatcher::Environment.patch_folder_paths, '*')).reduce([]) do |patches, current_path|
+    Dir.glob(File.join(DatabasePatcher::Environment.patch_folder_path, '*')).reduce([]) do |patches, current_path|
       patches << DatabasePatcher::PatchEntity.factory(current_path)
       patches
     end.sort_by(&:timestamp)

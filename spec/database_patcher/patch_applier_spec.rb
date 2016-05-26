@@ -4,7 +4,7 @@ describe DatabasePatcher::PatchApplier do
   let(:connection) { DatabasePatcher::DB.create_connection }
 
   before do
-    DatabasePatcher.init
+    DatabasePatcher::Initializer.new.init
     connection[:installed_patches].truncate
     connection.run('DROP TABLE IF EXISTS test')
     connection.run('DROP TABLE IF EXISTS sample')
@@ -20,7 +20,7 @@ describe DatabasePatcher::PatchApplier do
       end
 
       context 'and than one patch already made' do
-        before { DatabasePatcher.up }
+        before { described_class.new.up }
 
         it 'should not apply same patch twice' do
           subject
@@ -39,7 +39,7 @@ describe DatabasePatcher::PatchApplier do
       end
 
       context 'and than patching already made' do
-        before { DatabasePatcher.up }
+        before { described_class.new.up }
 
         it 'should use down for remove patch that already applied' do
           expect(connection[:installed_patches].count).to eq 3
@@ -65,7 +65,7 @@ describe DatabasePatcher::PatchApplier do
       end
 
       context 'and than patching already made' do
-        before { DatabasePatcher.up }
+        before { described_class.new.up }
 
         it 'should use rollback for remove patch that already applied' do
           expect(connection[:installed_patches].count).to eq 3

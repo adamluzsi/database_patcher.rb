@@ -6,7 +6,7 @@ module DatabasePatcher::Environment
     ENV['DATABASE_URL'] || raise('missing database url from ENV (DATABASE_URL)')
   end
 
-  def patch_folder_paths
+  def patch_folder_path
     folder_path = ENV['DATABASE_PATCH_FOLDER_PATH'] || File.join('db','patches')
     if folder_path[0] == File::Separator
       folder_path

@@ -19,7 +19,7 @@ class DatabasePatcher::Initializer
   end
 
   def create_patch_folder
-    FileUtils.mkpath(DatabasePatcher::Environment.patch_folder_paths)
+    FileUtils.mkpath(DatabasePatcher::Environment.patch_folder_path)
   end
 
   def connection
