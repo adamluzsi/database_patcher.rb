@@ -1,8 +1,11 @@
 # DatabasePatcher
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/database_patcher`. To experiment with that code, run `bin/console` for an interactive prompt.
+This is a tool for making database schema changes in our project.
+This is a CLI tool
 
-TODO: Delete this and the text above, and describe your gem
+This tool has two convention to follow
+  * It will use the project_root/db/patches folder for look up any change request
+  * It will create and maintain an :installed_patches table
 
 ## Installation
 
@@ -21,16 +24,37 @@ Or install it yourself as:
     $ gem install database_patcher
 
 ## Usage
+```
+Usage: database_patcher [options] <COMMAND_NAME>
 
-TODO: Write usage instructions here
+The following commands supported:
 
-## Development
+	Command: create_patch
+	aliases: add, new
+	Description: create a new patch file with this tools convention
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+	Command: initialize
+	aliases: init, setup
+	Description: this wil create initial directory and the default installed_patches table in the database
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+	Command: apply_pending_patches
+	aliases: apply, up
+	Description: apply all pending db patch
 
-## Contributing
+	Command: execute_all_remove_patch
+	aliases: apply, up
+	Description: execute the down patches and remove all db patch
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/database_patcher. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+	Command: rollback
+	aliases: revert, step_back
+	Description: execute the last patch down part, and remove the db patch registration
 
+  Command: help
+  Description: show you help message about the command it self 
+```
+
+### Example use
+
+  $ database_patcher new  create some test table
+  #> return the patch path
+  # use <your favorite editor> to edit the file/files

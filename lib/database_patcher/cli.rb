@@ -27,14 +27,6 @@ module DatabasePatcher::CLI
     if argv.any?{|str| str =~ /\bh(?:elp)/ }
       options_parser.parse!(argv)
     end
-    if argv[0] == 'help'
-      if argv[1].nil?
-        puts(options_parser.help)
-      else
-        puts(find_command_for(argv[1]).optparse.help)
-      end
-      exit
-    end
   end
 
   def options_parser
@@ -47,7 +39,7 @@ module DatabasePatcher::CLI
         opts.banner.concat("\tCommand: #{subclass.names.first}\n")
         opts.banner.concat("\taliases: #{subclass.names[1..-1].join(', ')}\n")
         opts.banner.concat("\tDescription: #{subclass.desc}\n")
-        opts.banner.concat("\n\n")
+        opts.banner.concat("\n")
       end
     end
   end

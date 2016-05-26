@@ -18,7 +18,7 @@ class DatabasePatcher::Command
     def names(*new_names)
       unless new_names.empty?
         @names = new_names
-        optparse.banner = OptionParser.new.banner + " <#{new_names.join('|')}>"
+        optparse.banner = OptionParser.new.banner + " #{new_names.first}"
       end
       @names
     end
@@ -44,6 +44,7 @@ class DatabasePatcher::Command
 
   end
 
+  require 'database_patcher/Command/help'
   require 'database_patcher/Command/create_patch'
   require 'database_patcher/Command/init'
   require 'database_patcher/Command/up'
