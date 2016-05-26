@@ -60,4 +60,24 @@ The following commands supported:
   # use <your favorite editor> to edit the file/files
   $ database_patcher apply_pending_patches
 
-Here is a [cheat sheet](http://sequel.jeremyevans.net/rdoc/files/doc/cheat_sheet_rdoc.html) if you want use the ruby syntax for creating patches 
+Here is a [cheat sheet](http://sequel.jeremyevans.net/rdoc/files/doc/cheat_sheet_rdoc.html) if you want use the ruby syntax for creating patches
+
+### Rake integration
+
+to use database_patcher from rake you can use the following:
+
+#### Rakefile
+
+```ruby
+require "database_patcher/rake_task"
+```
+
+  $ rake -T
+
+```sh
+  rake db:apply_pending_patches                      # apply pending schema migrations
+  rake db:create_patch[type,idempotent,description]  # create a new migration patch
+  rake db:migrate                                    # Alias task for apply_pending_patches
+  rake db:revert_installed_patches                   # apply pending schema migrations
+  rake db:rollback                                   # rollback one patch
+```
