@@ -14,8 +14,8 @@ class DatabasePatcher::PatchCreator
       puts(file_path)
     else
       FileUtils.mkpath(base_path)
-      FileUtils.touch(File.join(base_path,'up' + extension))
-      FileUtils.touch(File.join(base_path,'down' + extension))
+      FileUtils.touch(File.join(base_path, 'up' + extension))
+      FileUtils.touch(File.join(base_path, 'down' + extension))
       puts(base_path)
     end
   end
@@ -27,12 +27,24 @@ class DatabasePatcher::PatchCreator
   end
 
   def basename
-    [Time.now.to_i.to_s,@file_name_description].compact.join('_').gsub(/ +/,'_')
+    name = ''
+    name.concat(Time.now.to_i.to_s)
+    name.concat(file_name_description_part)
+    name
+  end
+
+  def file_name_description_part
+    case @file_name_description
+    when '', NilClass
+      ''
+    else
+      '_' + @file_name_description.to_s.gsub(/ +/, '_')
+    end
   end
 
   def extension
     case @type
-    when 'ruby','rb'
+    when 'ruby', 'rb'
       '.rb'
     when 'sql'
       '.sql'
