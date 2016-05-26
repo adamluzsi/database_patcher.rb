@@ -1,6 +1,6 @@
 require 'database_patcher'
 class DatabasePatcher::Command::Down < DatabasePatcher::Command
-  names 'execute_all_remove_patch', 'apply', 'up'
+  names 'execute_all_remove_patch', 'remove', 'down'
   desc 'execute the down patches and remove all db patch'
 
   on_call do |*_|
