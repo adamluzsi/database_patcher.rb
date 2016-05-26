@@ -44,10 +44,10 @@ class DatabasePatcher::Command
 
   end
 
-  require 'database_patcher/Command/help'
-  require 'database_patcher/Command/create_patch'
-  require 'database_patcher/Command/init'
-  require 'database_patcher/Command/up'
-  require 'database_patcher/Command/down'
-  require 'database_patcher/Command/rollback'
+  require 'database_patcher/command/help'
+  require 'database_patcher/command/create_patch'
+  require 'database_patcher/command/init'
+  require 'database_patcher/command/up'
+  require 'database_patcher/command/down'
+  require 'database_patcher/command/rollback'
 end
