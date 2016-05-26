@@ -59,3 +59,5 @@ The following commands supported:
   #> return the patch path
   # use <your favorite editor> to edit the file/files
   $ database_patcher apply_pending_patches
+
+Here is a (cheat sheet)[http://sequel.jeremyevans.net/rdoc/files/doc/cheat_sheet_rdoc.html] if you want use the ruby syntax for creating patches 
