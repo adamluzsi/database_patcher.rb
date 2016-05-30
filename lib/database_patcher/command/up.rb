@@ -4,7 +4,8 @@ class DatabasePatcher::Command::Up < DatabasePatcher::Command
   desc 'apply all pending db patch'
 
   on_call do |*_|
-    DatabasePatcher::Initializer.new.init
-    DatabasePatcher::PatchApplier.new.up
+    std = DatabasePatcher::Interface::STD.new
+    DatabasePatcher::Action::Initializer.new(std).init
+    DatabasePatcher::Action::PatchApplier.new(std).up
   end
 end

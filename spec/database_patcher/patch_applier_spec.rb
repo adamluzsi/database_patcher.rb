@@ -1,10 +1,10 @@
 require 'spec_helper'
-describe DatabasePatcher::PatchApplier do
+describe DatabasePatcher::Action::PatchApplier do
   let(:instance) { described_class.new }
   let(:connection) { DatabasePatcher::DB.create_connection }
 
   before do
-    DatabasePatcher::Initializer.new.init
+    DatabasePatcher::Action::Initializer.new.init
     connection[:installed_patches].truncate
     connection.run('DROP TABLE IF EXISTS test')
     connection.run('DROP TABLE IF EXISTS sample')

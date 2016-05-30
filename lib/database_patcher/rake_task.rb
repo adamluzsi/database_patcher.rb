@@ -3,8 +3,8 @@ namespace :db do
 
   desc 'apply pending schema migrations'
   task :apply_pending_patches do
-    DatabasePatcher::Initializer.new.init
-    DatabasePatcher::PatchApplier.new.up
+    DatabasePatcher::Action::Initializer.new.init
+    DatabasePatcher::Action::PatchApplier.new.up
   end
 
   desc "Alias task for apply_pending_patches"
@@ -12,20 +12,20 @@ namespace :db do
 
   desc 'apply pending schema migrations'
   task :revert_installed_patches do
-    DatabasePatcher::Initializer.new.init
-    DatabasePatcher::PatchApplier.new.down
+    DatabasePatcher::Action::Initializer.new.init
+    DatabasePatcher::Action::PatchApplier.new.down
   end
 
   desc 'rollback one patch'
   task :rollback do
-    DatabasePatcher::Initializer.new.init
-    DatabasePatcher::PatchApplier.new.rollback
+    DatabasePatcher::Action::Initializer.new.init
+    DatabasePatcher::Action::PatchApplier.new.rollback
   end
 
   desc 'create a new migration patch'
   task :create_patch, :type, :idempotent, :description do |t, args|
     args.with_defaults(:type => 'ruby', :idempotent => false, :description => '')
-    DatabasePatcher::PatchCreator.new(args[:type], args[:idempotent],args[:description]).make
+    DatabasePatcher::Action::PatchCreator.new(args[:type], args[:idempotent],args[:description]).make
   end
 
 end

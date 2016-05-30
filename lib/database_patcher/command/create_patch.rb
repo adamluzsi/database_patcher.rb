@@ -15,6 +15,6 @@ class DatabasePatcher::Command::CreatePatch < DatabasePatcher::Command
   end
 
   on_call do |args|
-    DatabasePatcher::PatchCreator.new(options[:type], options[:idempotent],args.join('_')).make
+    DatabasePatcher::Action::PatchCreator.new(options[:type], options[:idempotent],args.join('_')).make
   end
 end

@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe DatabasePatcher::Initializer do
+describe DatabasePatcher::Action::Initializer do
   let(:instance){ described_class.new }
   let(:connection) { DatabasePatcher::DB.create_connection }
 

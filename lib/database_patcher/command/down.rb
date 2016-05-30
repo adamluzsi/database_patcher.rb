@@ -4,7 +4,8 @@ class DatabasePatcher::Command::Down < DatabasePatcher::Command
   desc 'execute the down patches and remove all db patch'
 
   on_call do |*_|
-    DatabasePatcher::Initializer.new.init
-    DatabasePatcher::PatchApplier.new.down
+    std = DatabasePatcher::Interface::STD.new
+    DatabasePatcher::Action::Initializer.new(std).init
+    DatabasePatcher::Action::PatchApplier.new(std).down
   end
 end

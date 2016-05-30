@@ -55,15 +55,15 @@ class DatabasePatcher::PatchEntity
   end
 
   def uniq_indentifier
-    {
-      timestamp: timestamp,
-      md5_down: md5_down,
-      md5_up: md5_up
-    }
+    { timestamp: timestamp }
   end
 
   def patch_record
-    uniq_indentifier.merge(comment: comment)
+    {
+      comment: comment,
+      md5_down: md5_down,
+      md5_up: md5_up
+    }.merge(uniq_indentifier)
   end
 
   def md5(string)

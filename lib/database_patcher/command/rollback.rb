@@ -4,7 +4,8 @@ class DatabasePatcher::Command::RollBack < DatabasePatcher::Command
   desc 'execute the last patch down part, and remove the db patch registration'
 
   on_call do |*_|
-    DatabasePatcher::Initializer.new.init
-    DatabasePatcher::PatchApplier.new.rollback
+    std = DatabasePatcher::Interface::STD.new
+    DatabasePatcher::Action::Initializer.new(std).init
+    DatabasePatcher::Action::PatchApplier.new(std).rollback
   end
 end
