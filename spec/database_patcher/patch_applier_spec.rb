@@ -25,7 +25,7 @@ describe DatabasePatcher::Action::PatchApplier do
 
         it 'should not apply same patch twice' do
           subject
-          expect(connection[:installed_patches].count).to eq 3
+          expect(connection[:installed_patches].count).to eq 4
         end
       end
     end
@@ -43,7 +43,7 @@ describe DatabasePatcher::Action::PatchApplier do
         before { described_class.new.up }
 
         it 'should use down for remove patch that already applied' do
-          expect(connection[:installed_patches].count).to eq 3
+          expect(connection[:installed_patches].count).to eq 4
           subject
           expect(connection[:installed_patches].count).to eq 0
         end
@@ -69,13 +69,14 @@ describe DatabasePatcher::Action::PatchApplier do
         before { described_class.new.up }
 
         it 'should use rollback for remove patch that already applied' do
-          expect(connection[:installed_patches].count).to eq 3
+          expect(connection[:installed_patches].count).to eq 4
           subject
-          expect(connection[:installed_patches].count).to eq 2
+          expect(connection[:installed_patches].count).to eq 3
         end
 
-        it 'should execute all the rollback commands' do
-          subject
+        it 'should execute the rollback commands' do
+          instance.rollback
+          instance.rollback
 
           expect { connection.fetch('SELECT * FROM test').all }.to raise_error(Sequel::DatabaseError, /UndefinedTable/)
         end

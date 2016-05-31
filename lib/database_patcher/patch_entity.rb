@@ -4,21 +4,28 @@ class DatabasePatcher::PatchEntity
   require 'database_patcher/patch_entity/file'
   require 'database_patcher/patch_entity/folder'
 
-  def self.factory(path)
+  def self.factory(path, interface)
     if ::File.directory?(path)
-      self::Folder.new(path)
+      self::Folder.new(path, interface)
     else
-      self::File.new(path)
+      self::File.new(path, interface)
     end
   end
 
-  def initialize(path)
+  attr_reader :path, :interface
+  def initialize(path, interface)
     @path = path
+    @interface = interface
   end
 
   def timestamp
-    basename = ::File.basename(@path, '.*')
     basename.scan(/^\d+/).flatten.first.to_i
+  end
+
+  UUID_MATCHER = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'.freeze
+  def uuid
+    basename = ::File.basename(@path, '.*')
+    basename.scan(/^\d+_(#{UUID_MATCHER})_/).flatten.first.to_s
   end
 
   def up(_connection)
@@ -28,6 +35,15 @@ class DatabasePatcher::PatchEntity
   def down(_connection)
     raise
   end
+
+  def uniq_indentifier
+    {
+      timestamp: timestamp,
+      uuid: uuid
+    }
+  end
+
+  protected
 
   def execute_file(connection, path)
     case ::File.extname(path)
@@ -54,15 +70,11 @@ class DatabasePatcher::PatchEntity
     $stdout.puts("Patch removed: #{uniq_indentifier[:timestamp]}")
   end
 
-  def uniq_indentifier
-    { timestamp: timestamp }
-  end
-
   def patch_record
     {
-      comment: comment,
       md5_down: md5_down,
-      md5_up: md5_up
+      md5_up: md5_up,
+      comment: comment
     }.merge(uniq_indentifier)
   end
 
@@ -94,5 +106,9 @@ class DatabasePatcher::PatchEntity
 
   def raise_unknown_extension_for(path)
     raise("unknown patch file extension: #{::File.extname(path)} (#{path})")
+  end
+
+  def basename
+    ::File.basename(@path, '.*')
   end
 end
